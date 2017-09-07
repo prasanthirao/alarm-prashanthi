@@ -40,6 +40,8 @@ $(document).ready(function () {
             	var ul = document.getElementById("givenTime");
             	var li = document.createElement("li");
             	var lii =document.createElement("button");
+            	lii.setAttribute("id",time);
+            	lii.setAttribute("type","delete");
 	//lii.setAttribute("click",function() { alert("blabla"); });
             	li.setAttribute("class", "list-group-item");
             	li.setAttribute("class","well");
@@ -109,9 +111,10 @@ bottom: 0px;">
     
     <div id="bottom" style="position: fixed; bottom: 0px;">
 <div id="addingTime" style="display: none;">
+<form id="myForm">
 <input type="text" id="giveTime" value="" name="time"
 onclick="this.select()" onKeyDown="if(event.keyCode==13);"
-style="margin-bottom: -5px; margin-left: 17px;" autofocus>
+style="margin-bottom: -5px; margin-left: 17px;" autofocus></form>
 </div>
 <div onclick="openBox()" id="plus">
 <center>

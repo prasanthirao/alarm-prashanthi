@@ -13,13 +13,15 @@ var ul = document.getElementById("givenTime");
 var li = document.createElement("li");
 var lii=document.createElement("button");
 //lii.setAttribute("id","ids")
+lii.setAttribute("id",time);
+lii.setAttribute("type","delete");
 //lii.setAttribute("onclick", function() { alert("blabla"); });
 li.setAttribute("class", "list-group-item");
 li.setAttribute("class","well");
 li.appendChild(document.createTextNode(time));
 ul.appendChild(li);
-
 ul.appendChild(lii);
+document.getElementById("myForm").reset();
 
 
 }
@@ -60,6 +62,7 @@ document.getElementById('giveTime').onkeydown = function(event){
        //postTime();
     	time =document.getElementById("giveTime").value;
     	checkTimeFormat(time);
+    	
     }
 }
 function checkTimeFormat(event){
@@ -87,9 +90,13 @@ alert(event);
 //document.getElementById("givenTime").onclick=function(event){
 function startTimer(event){
 	var target = getEventTarget(event);
+	var targetId = event.target.id;
+	if(!targetId){
 	document.getElementById("display").innerHTML = target.innerHTML;
 	//document.getElementsByTagName("button").onclick=function(){alert("sdf");}
+	//document.getElementById(targetId);
 	alert(target.innerHTML);
+	//alert(targetId);
 	date= new Date();
 	var initialtime = target.innerHTML;
 	var array =null;
@@ -107,6 +114,12 @@ function startTimer(event){
 	date.setTime(date.getTime() + 1000);
 	}, 1000);
 	document.getElementById("stop").style.display = "block";
+	}
+	else
+		{
+		document.getElementById(targetId);
+		alert(targetId);
+		}
 	};
 
 	function getEventTarget(e) {

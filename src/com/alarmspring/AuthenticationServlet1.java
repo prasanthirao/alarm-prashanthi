@@ -33,22 +33,28 @@ public class AuthenticationServlet1 {
 	}
 
 	@RequestMapping(value = "/AuthenticationServlet", method = RequestMethod.POST)
-	public ModelAndView Register(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/plain");
-	     PrintWriter out = response.getWriter();
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String email = request.getParameter("email");
+	@ResponseBody
+	public void Register(HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException {
+		//response.setContentType("text/plain");
+	    //PrintWriter out = response.getWriter();
+		String str=Util.getPostData(request);
+	       String str1=str.replace("null", "");
+	       System.out.println(str1);
+	       JSONObject jsonObject = new JSONObject(str1);
+		String firstName = jsonObject.getString("firstname");
+		String lastName = jsonObject.getString("lastname");
+		String email = jsonObject.getString("email");
 		HttpSession session = request.getSession();
 		// session.setAttribute("useremail",email);
 		String password = request.getParameter("password");
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		AuthenticationJDO authenticationJdoObject = new AuthenticationJDO();
-
-		authenticationJdoObject.setemail(email);
 		authenticationJdoObject.setfirstName(firstName);
 		authenticationJdoObject.setlastName(lastName);
+		authenticationJdoObject.setemail(email);
 		authenticationJdoObject.setpassword(password);
+		pm.makePersistent(authenticationJdoObject);
+		session.setAttribute("id", authenticationJdoObject);
 
 		try {
 
@@ -60,7 +66,7 @@ public class AuthenticationServlet1 {
 				boolean valid = true;
 				for (AuthenticationJDO obj : results) {
 					if (obj.getemail().equals(email)) {
-						out.println("already exists");
+						//out.println("already exists");
 						valid = false;
 						break;
 						// return new ModelAndView("index");
@@ -69,9 +75,10 @@ public class AuthenticationServlet1 {
 
 				}
 				if (valid) {
+				    
 					pm.makePersistent(authenticationJdoObject);
 					session.setAttribute("id", authenticationJdoObject);
-					return new ModelAndView("success");
+					//return new ModelAndView("success");
 				}
 			}
 			/*
@@ -103,20 +110,21 @@ public class AuthenticationServlet1 {
 
 		// ModelAndView modelObject=new ModelAndView("success");
 		// return modelObject;
-		return null;
+		
 	}
 	@RequestMapping(value = "/LoginServlet",method = RequestMethod.POST)
 	@ResponseBody
-	public Void Login(HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException {
-		response.setContentType("text/plain");
+	public void Login(HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException {
+		//response.setContentType("text/plain");
 	    System.out.println("into spring");
 		//PrintWriter out = response.getWriter();
         String str=Util.getPostData(request);
        String str1=str.replace("null", "");
+       System.out.println(str1);
        JSONObject jsonObject = new JSONObject(str1);
        //String username=jsonObject.getString("username");
        String email = jsonObject.getString("email");
-      String password = jsonObject.getString("password");
+       String password = jsonObject.getString("password");
 
 		//String email = request.getParameter("email");
 		HttpSession session = request.getSession();
@@ -194,7 +202,8 @@ public class AuthenticationServlet1 {
 			System.out.println("Exception occurs");
 
 		}
-		return null;
+
+		
 	}
 	
 	
