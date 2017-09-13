@@ -31,7 +31,7 @@
 
 		<!-- <h1>Hello SignUp!</h1> -->
 		<table border="2" , align="center" style="margin-top: 35px;">
-			
+			<form action="AuthenticationServlet" method="post">
 				<tr>
 					<td>First Name:</td>
 					<td><input type="text" name="firstName" id="firstName"></td>
@@ -44,26 +44,26 @@
 					<td>Email:</td>
 					<td><input type="email" name="email" id="email"></td>
 				</tr>
-				
+
 				<tr>
 					<td>Password:</td>
 					<td><input type="password" name="password" id="password"></td>
 				</tr>
 
 				<tr>
-					<td><input type="submit" value="submit" onclick="signupcall()"></td>
+					<td><input type="submit" value="submit"></td>
 				</tr>
 				</td>
 				</tr>
-			
+			</form>
 		</table>
 
-	
+
 	</div>
 
 	<div id='signIn' style="display: none;">
 		<table border="2" , align="center" style="margin-top: 35px;">
-
+			<form action="/LoginServlet" method="post">
 				<tr>
 					<td>Email:</td>
 					<td><input type="email" name="email" id="email1"></td>
@@ -73,10 +73,11 @@
 					<td><input type="password" name="password" id="password1"></td>
 				</tr>
 				<tr>
-					<td><input type="submit" name="SignIn" value="login" onclick="makeLoginAjax()"></td>
+					<td><input type="submit" name="SignIn" value="login"></td>
 				</tr>
+			</form>
 		</table>
-	
+
 	</div>
 
 
